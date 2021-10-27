@@ -2,7 +2,7 @@
   "name": "erc-1155",
   "version": "1.0.0",
   "description": "ERC-1155 Reference Implementation",
-  "main": "truffle-config.js",
+  "main": "hardhat.config.js",
   "directories": {
     "test": "test"
   },
@@ -14,10 +14,16 @@
     "@babel/core": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
     "@babel/register": "^7.4.0",
-    "truffle": "^5.1.47"
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-etherscan": "^2.1.1",
+    "@nomiclabs/hardhat-truffle5": "^2.0.2",
+    "@nomiclabs/hardhat-web3": "^2.0.0",
+    "dotenv": "^10.0.0",
+    "hardhat": "^2.6.7"
   },
   "scripts": {
-    "test": "npx truffle test"
+    "test": "hardhat test",
+    "compile": "hardhat compile && node compiledsize.js"
   },
   "repository": {
     "type": "git",

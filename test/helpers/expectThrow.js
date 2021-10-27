@@ -1,21 +1,13 @@
-export default async (promise, expectedRevertMessage="") => {
+export default async (promise, expectedRevertMessage = '') => {
   try {
     await promise;
   } catch (error) {
     let invalidOpcode = false;
     let outOfGas = false;
     let revert = false;
-    if (expectedRevertMessage !== "") {
+    if (expectedRevertMessage !== '') {
       // Check end of error string, it's where the revert reason is output.
-      let expectedLen = expectedRevertMessage.length;
-      if (expectedLen < error.message.length) {
-          // Rather annoyingly, truffle adds a period if it can decode the revert reason.
-          if (error.message.search('-- Reason given:') >= 0) {
-            revert = expectedRevertMessage === error.message.substring(error.message.length-expectedLen-1, error.message.length-1);
-          } else {
-            revert = expectedRevertMessage === error.message.substring(error.message.length-expectedLen, error.message.length);
-          }
-      }
+      revert = error.message.indexOf(expectedRevertMessage) !== -1;
     } else {
       // TODO: Check jump destination to destinguish between a throw
       //       and an actual invalid jump.
@@ -30,7 +22,11 @@ export default async (promise, expectedRevertMessage="") => {
 
     assert(
       invalidOpcode || outOfGas || revert,
-      'Expected throw with revert string \'' + expectedRevertMessage + '\', got \'' + error + '\' instead',
+      "Expected throw with revert string '" +
+        expectedRevertMessage +
+        "', got '" +
+        error +
+        "' instead"
     );
     return;
   }
