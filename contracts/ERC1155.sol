@@ -5,6 +5,7 @@ import "./Address.sol";
 import "./Common.sol";
 import "./IERC1155TokenReceiver.sol";
 import "./IERC1155.sol";
+import "hardhat/console.sol";
 
 // A sample implementation of core ERC1155 function.
 contract ERC1155 is IERC1155, ERC165, CommonConstants
@@ -63,7 +64,7 @@ contract ERC1155 is IERC1155, ERC165, CommonConstants
         @param _value   Transfer amount
         @param _data    Additional data with no specified format, MUST be sent unaltered in call to `onERC1155Received` on `_to`
     */
-    function safeTransferFrom(address _from, address _to, uint256 _id, uint256 _value, bytes calldata _data) external {
+    function safeTransferFrom(address _from, address _to, uint256 _id, uint256 _value, bytes calldata _data) external {    
 
         require(_to != address(0x0), "_to must be non-zero.");
         require(_from == msg.sender || operatorApproval[_from][msg.sender] == true, "Need operator approval for 3rd party transfers.");
